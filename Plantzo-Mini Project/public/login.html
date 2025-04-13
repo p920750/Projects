@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Plantzo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://static.vecteezy.com/system/resources/previews/048/020/608/non_2x/greenery-plants-in-conservatory-abundance-background-free-photo.jpg') no-repeat center center/cover;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .left {
+            flex: 1;
+            background: url('https://png.pngtree.com/thumb_back/fh260/background/20210214/pngtree-plant-palm-leaf-simple-background-image_559516.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .right {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .right h2 {
+            margin-bottom: 10px;
+            color: #004d00;
+        }
+        .right p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus, select:focus {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #004d00;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #004d00;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #003300;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+        .forgot {
+            display: block;
+            text-align: center;
+            font-size: 12px;
+            margin: 10px 0;
+            color: #004d00;
+        }
+        .signup {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .signup a {
+            color: #004d00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .signup a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            .left, .right {
+                flex: none;
+                width: 100%;
+                padding: 30px;
+            }
+            .left {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>PLANTZO</h1>
+            <h3>Indoor Elegance, Outdoor Beauty.</h3>
+        </div>
+        <div class="right">
+            <h2>Welcome</h2>
+            <p>Log in to your account</p>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <p id="emailError" class="error">Invalid email.</p>
+
+                <input type="password" id="password" placeholder="Password" required>
+                <p id="passwordError" class="error">Incorrect password.</p>
+
+                <!-- Role Selection Dropdown -->
+                <select id="role" required>
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="nurserypartner">NurseryPartner</option>
+                    <option value="user">User</option>
+                </select>
+                <p id="roleError" class="error">Please select a role.</p>
+
+                <button type="submit">Login</button>
+            
+            </form>
+            <p class="signup">Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+    </div>
+    <script>
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const selectedRole = document.getElementById("role").value.trim();
+
+    if (!selectedRole) {
+        alert("Please select a role.");
+        return;
+    }
+
+    try {
+        let apiUrl = `${window.location.origin}/api/users/login`;
+        let loginData = { email, password };
+
+        if (selectedRole === "nurserypartner") {
+            apiUrl = `${window.location.origin}/api/partners/login`;
+            loginData = { email, password }; // Fix: Use 'email' for partners
+        }
+
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(loginData),
+        });
+
+        console.log("Login Response:", response); // Debugging
+
+        const data = await response.json();
+
+        if (response.ok) {
+            if (selectedRole === "nurserypartner") {
+                // Partner login
+                localStorage.setItem("token", data.token); // Store token for partners
+                alert("Login successful! Redirecting...");
+                window.location.href = "nursery_dashboard.html"; // Redirect partner
+            } else {
+                // User or admin login
+                if (selectedRole !== data.user.role) {
+                    alert(`Incorrect role selection! You are registered as a "${data.user.role}".`);
+                    return;
+                }
+                localStorage.setItem("user", JSON.stringify(data));
+                alert("Login successful! Redirecting...");
+                if (data.user.role === "admin") {
+                    window.location.href = "adminDashboard.html";
+                } else {
+                    window.location.href = "landing.html";
+                }
+            }
+        } else {
+            alert(data.message || "Login failed. Please try again.");
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+        alert("An error occurred. Please check your internet connection.");
+    }
+});
+
+    </script>
+    
+        
+</body>
+</html>

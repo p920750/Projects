@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup | Plantzo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('https://static.vecteezy.com/system/resources/previews/048/020/608/non_2x/greenery-plants-in-conservatory-abundance-background-free-photo.jpg') no-repeat center center/cover;
+    }
+    .container {
+      width: 400px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #004d00;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #004d00;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #003300;
+    }
+    p {
+      text-align: center;
+      margin-top: 10px;
+    }
+    a {
+      color: #004d00;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create an Account</h2>
+    <form id="signupForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <p id="usernameError" class="error">Username must be at least 3 characters and contain only letters & numbers.</p>
+
+      <input type="email" id="email" placeholder="Email" required>
+      <p id="emailError" class="error">Invalid email format. Must be a valid Gmail address.</p>
+
+      <input type="password" id="password" placeholder="Password" required>
+      <p id="passwordError" class="error">Password must be at least 6 characters and include at least one special character.</p>
+
+      <!-- Role Selection Dropdown -->
+      <select id="role" required>
+        <option value="">Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="nurserypartner">NurseryPartner</option>
+        <option value="user">User</option>
+      </select>
+      <p id="roleError" class="error">Please select a role.</p>
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const role = document.getElementById("role").value; // Get selected role
+
+      let valid = true;
+
+      // Username Validation
+      const usernameRegex = /^[a-zA-Z0-9]{3,}$/;
+      if (!usernameRegex.test(username)) {
+        document.getElementById("usernameError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("usernameError").style.display = "none";
+      }
+
+      // Email Validation
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|icloud\.com|aol\.com|protonmail\.com|zoho\.com|ac\.in|co\.in)$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("emailError").style.display = "none";
+      }
+
+      // Password Validation
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[\W_]).{6,}$/;
+      if (!passwordRegex.test(password)) {
+        document.getElementById("passwordError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("passwordError").style.display = "none";
+      }
+
+      // Role Validation
+      if (!role) {
+        document.getElementById("roleError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("roleError").style.display = "none";
+      }
+
+      if (!valid) return; // Stop submission if validation fails
+
+      try {
+        const response = await fetch("http://localhost:5000/api/users/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password, role }), // Include role
+        });
+
+        if (response.ok) {
+          alert("Signup successful! Redirecting to login page...");
+          window.location.href = "login.html";
+        } else {
+          const data = await response.json();
+          alert(data.message || "Signup failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during signup:", error);
+        alert("An error occurred. Please check your internet connection.");
+      }
+    });
+  </script>
+</body>
+</html>

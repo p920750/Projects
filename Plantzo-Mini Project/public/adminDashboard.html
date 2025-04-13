@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantzo Admin Dashboard</title> <link rel="stylesheet" href="admin-dashboard.css">
+   
+</head>
+<body>
+    <div class="admin-dashboard">
+        <h1>Admin Dashboard</h1>
+        <button id="logoutBtn">Logout</button>
+
+        <div class="nav-tabs">
+            <button id="orders-tab" class="tab-button active">Orders</button>
+            <button id="products-tab" class="tab-button">Products</button>
+            <button id="partners-tab" class="tab-button">Nursery Partners</button>
+        </div>
+        
+        <!-- Orders Tab -->
+        <div id="orders-section" class="tab-content active">
+            <h2>Customer Orders</h2>
+            <table id="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-list">
+                    <!-- Orders will be loaded here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Products Tab -->
+        <div id="products-section" class="tab-content">
+            <h2>Product Management</h2>
+            <button id="add-product-btn">Add New Product</button>
+            
+            <table id="products-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Partner</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="products-list">
+                    <!-- Products will be loaded here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Partners Tab -->
+        <div id="partners-section" class="tab-content">
+            <h2>Nursery Partners</h2>
+            <button id="addPartnerButton">Add Partners</button>
+            <table id="partners-table">
+                <thead>
+                    <tr>
+                        <th>Partner Name</th>
+                        <th>Joined Date</th>
+                        <th>Products</th>
+                        <th>Total Sales</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="partners-list">
+                    <!-- Partners will be loaded here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Partner Details Modal -->
+    <div id="partner-details-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="partner-detail-title">Partner Details</h3>
+            <div class="partner-details">
+                <p><strong>Total Sales:</strong> <span id="partner-total-sales">₹0.00</span></p>
+                <p><strong>Products:</strong> <span id="partner-product-count">0</span></p>
+                <p><strong>Rating:</strong> <span id="partner-rating">N/A</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Partner Modal -->
+    <div id="partner-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Add Nursery Partner</h3>
+            <form id="partner-form">
+                <div class="form-group">
+                    <label for="partner-name">Name:</label>
+                    <input type="text" id="partner-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="partner-email">Email:</label>
+                    <input type="email" id="partner-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="partner-phone">Phone:</label>
+                    <input type="text" id="partner-phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="partner-location">Location:</label>
+                    <input type="text" id="partner-location" required>
+                </div>
+
+                <button type="submit">Add Partner</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="product-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modal-title">Add New Product</h3>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                
+                <div class="form-group">
+                    <label for="product-name">Name:</label>
+                    <input type="text" id="product-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-description">Description:</label>
+                    <textarea id="product-description" name="description" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-category">Category:</label>
+                    <select id="product-category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="indoor">Indoor Plants</option>
+                        <option value="outdoor">Outdoor Plants</option>
+                        <option value="flowerseeds">Flower Seeds</option>
+                        <option value="fertilizer">Fertilizers</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-price">Price:</label>
+                    <input type="number" id="product-price" name="price" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-image">Image URL:</label>
+                    <input type="text" id="product-image" name="imageUrl" required oninput="updateImagePreview()">
+                </div>
+                
+                <!-- Image Preview -->
+                <img id="product-image-preview" src="" alt="Product Image" style="width: 100px; height: auto; display: none; margin-top: 10px;">
+                
+                <div class="form-group">
+                    <label for="product-stock">Stock Quantity:</label>
+                    <input type="number" id="product-stock" name="stock" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-partner">Partner (if applicable):</label>
+                    <select id="product-partner" name="partnerId">
+                        <option value="">None (Plantzo Product)</option>
+                        <!-- Partners loaded via JS -->
+                    </select>
+                </div>
+                
+                <!-- Conditional Fields -->
+                <div id="plant-guidelines-container" class="form-group" style="display: none;">
+                    <label for="product-guidelines">Guidelines:</label>
+                    <textarea id="product-guidelines" name="guidelines"></textarea>
+                </div>
+                
+                <div id="seed-fertilizer-howto-container" class="form-group" style="display: none;">
+                    <label for="product-howto">How To Use:</label>
+                    <textarea id="product-howto" name="howToUse"></textarea>
+                </div>
+                
+                <button type="submit" id="product-submit-button">Save</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit Partner Modal -->
+    <div id="editPartnerModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditForm()">&times;</span>
+            <h2>Edit Partner</h2>
+            <form id="editPartnerForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" required />
+                </div>
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" required />
+                </div>
+                <div class="form-group">
+                    <label for="joinedDate">Joined Date:</label>
+                    <input type="datetime-local" id="joinedDate" required />
+                </div>
+                <div class="form-group">
+                    <label for="products">Products:</label>
+                    <input type="number" id="products" required />
+                </div>
+                <div class="form-group">
+                    <label for="totalSales">Total Sales:</label>
+                    <input type="number" id="totalSales" required />
+                </div>
+                <div class="form-group">
+                    <label for="averageRating">Average Rating:</label>
+                    <input type="number" step="0.1" id="averageRating" min="0" max="5" required />
+                </div>
+                <button type="submit" id="saveChangesBtn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    <!-- View Order Modal -->
+<div id="viewOrderModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('viewOrderModal')">&times;</span>
+      <h2>Order Details</h2>
+      <div id="viewOrderDetailsContent"></div>
+    </div>
+  </div>
+  
+  <!-- Edit Order Modal -->
+  <div id="editOrderModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('editOrderModal')">&times;</span>
+      <h2>Edit Order</h2>
+      <form id="editOrderForm">
+        <input type="hidden" id="editOrderId" />
+        <label>Customer Name:</label>
+        <input type="text" id="editCustomerName" required />
+        
+        <label>Total Amount:</label>
+        <input type="number" id="editTotalAmount" required />
+  
+        <label>Status:</label>
+        <select id="editStatus">
+          <option value="Pending">Pending</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+  
+        <button type="button" onclick="saveOrderChanges()">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  
+  <script src="admin-dashboard.js"></script>
+  <script src="orders.js"></script>
+
+</body>
+</html>
