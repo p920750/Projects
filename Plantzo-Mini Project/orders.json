@@ -1,0 +1,40 @@
+[
+    {
+      "_id": "67ea27c42f083a7f46fccead",
+      "items": [
+        {
+          "productId": "67e4526e26313b666475af0cc",
+          "name": "Morning Glory Seeds",
+          "price": 150,
+          "quantity": 1
+        },
+        {
+          "productId": "67e4192326313b666475aebd",
+          "name": "Spider Plant",
+          "price": 300,
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 350,
+      "userId": "660a1b2c3d4e5f678901aaaa",
+      "partnerId": "67e7b741f3ce5c9320a0f237",
+      "status": "Pending"
+    },
+    {
+      "_id": "67ea27c42f083a7f46fcceb0",
+      "items": [
+        {
+          "productId": "67e4216826313b666475aec2",
+          "name": "Fiddle Leaf Fig",
+          "price": 999,
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 999,
+      "userId": "660a1b2c3d4e5f678901cccc",
+      "partnerId": "67e7b741f3ce5c9320a0f237",
+      "status": "Pending"
+    }
+  ]
+  
+  
