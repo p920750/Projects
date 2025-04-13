@@ -1,0 +1,54 @@
+[
+    {
+      "orderId": "ORD1001",
+      "customerName": "John Doe",
+      "customerEmail": "john.doe@gmail.com",
+      "customerPhone": "9876543210",
+      "customerAddress": "123 Green Street, kerala",
+      "paymentMethod": "COD",
+      "date": "2025-03-28T10:00:00.000Z",
+      "totalAmount": 350,
+      "status": "Pending",
+      "items": [
+        {
+          "productId": "6600123456789abcd123456",
+          "productName": "Morning Glory Seeds",
+          "category": "Seeds",
+          "quantity": 1,
+          "price": 150
+        },
+        {
+          "productId": "6600123456789abcd654321",
+          "productName": "Spider Plant",
+          "category": "Indoor",
+          "quantity": 1,
+          "price": 300
+        }
+      ],
+      "partnerId": "6600123456789abcd999999",
+      "trackingId": "TRK100100"
+    },
+    {
+      "orderId": "ORD1002",
+      "customerName": "Jane Smith",
+      "customerEmail": "jane.smith@gmail.com",
+      "customerPhone": "9876543211",
+      "customerAddress": "456 Bloom Street, kerala",
+      "paymentMethod": "Credit Card",
+      "date": "2025-03-27T10:00:00.000Z",
+      "totalAmount": 999,
+      "status": "Shipped",
+      "items": [
+        {
+          "productId": "6600123456789abcd987654",
+          "productName": "Fiddle Leaf Fig",
+          "category": "Indoor",
+          "quantity": 1,
+          "price": 999
+        }
+      ],
+      "partnerId": "6600123456789abcd888888",
+      "trackingId": "TRK100101"
+    }
+  ]
+  
