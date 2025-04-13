@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levia Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        .chat-container {
+            width: 450px;
+            height: 570px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .chat-header {
+            background-color: gray;
+            padding: 25px;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 13px;
+            right: 16px;
+            background: #201f21;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            padding: 7px 14px;
+        }
+        .chat-body {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid grey;
+            padding: 10px;
+            background-color: white;
+            height: 60px;
+        }
+        .chat-footer input {
+            width: 88%;
+            height: 20px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+        .chat-footer button {
+            width: 20%;
+            height: 40px;
+            margin-left: 10px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin: 5px 0;
+        }
+        .bot-message-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .bot-label {
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .bot-image {
+            width: 25px;
+            height: 25px;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            text-align: left;
+            border-radius: 15px 15px 15px 0;
+            padding: 8px;
+        }
+        .user-message {
+            background-color: #4285F4;
+            color: black;
+            align-self: flex-end;
+            text-align: justify;
+            border-radius: 15px 15px 0 15px;
+            margin: 10px 0; 
+            padding: 8px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+</head>
+<body>
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            Chat with Levia
+            <button class="close-button" onclick="closeChat()">✖</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="user-input" placeholder="Drag an image here..." disabled>
+            <button onclick="sendMessage()" id="sendButton" disabled>Send</button>
+        </div>
+    </div>
+    
+    <script>
+        const chatBody = document.getElementById('chat-body');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('sendButton');
+
+        async function loadModel() {
+            try {
+                const model = await tf.loadLayersModel('public/model/model.json');
+                console.log('Model loaded successfully!');
+                return model;
+            } catch (error) {
+                console.error('Error loading the model:', error);
+            }
+        }
+    
+        let loadedModel = null;
+        loadModel().then((model) => {
+            loadedModel = model;
+            console.log('Ready to make predictions!');
+            setupUserInput();
+        });
+
+        function closeChat() {
+            window.close();
+            document.getElementById('chat-container').style.display = 'none';
+        }
+    
+        function appendBotMessage(text) {
+            let chatBody = document.getElementById('chat-body');
+            
+            let messageContainer = document.createElement('div');
+            messageContainer.className = 'message-container';
+    
+            let botLabel = document.createElement('div');
+            botLabel.className = 'bot-label';
+            botLabel.innerText = 'Levia:';
+    
+            let botMessageContainer = document.createElement('div');
+            botMessageContainer.className = 'bot-message-container';
+    
+            let botImage = document.createElement('img');
+            botImage.src = "bot.png";
+            botImage.className = 'bot-image';
+            botImage.alt = "Bot";
+    
+            let botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            botMessage.innerText = text;
+    
+            messageContainer.appendChild(botLabel);
+            botMessageContainer.appendChild(botImage);
+            botMessageContainer.appendChild(botMessage);
+            messageContainer.appendChild(botMessageContainer);
+            chatBody.appendChild(messageContainer);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        async function sendMessage() {
+            let message = userInput.value.trim();
+        
+            if (!message) return;
+        
+            let userMessageContainer = document.createElement('div');
+            userMessageContainer.className = 'message-container';
+        
+            let userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.innerText = message;
+        
+            userMessageContainer.appendChild(userMessage);
+            chatBody.appendChild(userMessageContainer);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        
+            userInput.value = "";
+        
+            try {
+                let response = await fetch("http://localhost:8000/query", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.statusText}`);
+                }
+        
+                let data = await response.json();
+                appendBotMessage(data.response);
+            } catch (error) {
+                console.error("Error fetching OpenAI response:", error);
+                appendBotMessage("Sorry, I couldn't process your request. Please try again.");
+            }
+        } 
+        
+        userInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+                event.preventDefault();
+            }
+        });
+
+        async function predictImage(file) {
+            if (!loadedModel) {
+                appendBotMessage("Model is not yet loaded. Please try again later.");
+                return;
+            }
+        
+            const classLabels = [
+                "Areca Palm Healthy Leaf", "Fusarium Wilt", "Underwatering", "Colletotrichum Leaf Spot",
+                "Golden Pothos Healthy Leaf", "Pythium Root Rot", "Cercospora Leaf Spot",
+                "Snake Plant Healthy Leaf", "Pythium Root Rot", "Colletotrichum Leaf Spot"
+            ];
+        
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+        
+            img.onload = async () => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+        
+                canvas.width = 224;
+                canvas.height = 224;
+                context.drawImage(img, 0, 0, 224, 224);
+        
+                const resizedImage = tf.browser.fromPixels(canvas)
+                    .toFloat()
+                    .div(255.0)
+                    .expandDims();
+        
+                const predictions = await loadedModel.predict(resizedImage).array();
+                const result = predictions[0];
+        
+                const maxIndex = result.indexOf(Math.max(...result));
+                const confidence = result[maxIndex];
+                const diseaseName = classLabels[maxIndex];
+        
+                const confidenceThreshold = 0.5;
+        
+                if (confidence <= confidenceThreshold) {
+                    appendBotMessage("Image not found or not recognized");
+                    userInput.placeholder = "Drag an image here...";
+                    appendBotMessage("Please upload an image.");
+                    return;
+                }
+        
+                appendBotMessage(`Analyzing image and fetching disease information...`);
+        
+                fetchDiseaseDescription(diseaseName)
+                    .then(description => {
+                        const topPrediction = `${diseaseName} (${(confidence * 100).toFixed(2)}%)`;
+                        chatBody.removeChild(chatBody.lastChild);
+        
+                        if (diseaseName.toLowerCase().includes("healthy")) {
+                            appendBotMessage(`Top Prediction: ${topPrediction}`);
+                        } else {
+                            appendBotMessage(`Top Prediction: ${topPrediction}\n\nDescription for ${diseaseName}: ${description}`);
+                        }
+                        enableTextInput();
+                    })
+                    .catch(error => {
+                        console.error("Error in description fetch:", error);
+                        chatBody.removeChild(chatBody.lastChild);
+                        appendBotMessage(`Top Prediction: ${diseaseName} (${(confidence * 100).toFixed(2)}%)\n\nCould not get description. Error: ${error.message}`);
+                        enableTextInput();
+                    });
+            };
+        }
+
+        async function fetchDiseaseDescription(diseaseName) {
+            const apiUrl = "http://localhost:8000/query";
+            try {
+                console.log("Sending request for disease:", diseaseName);
+                
+                const requestBody = {
+                    disease_name: diseaseName,
+                    query: "What are the main symptoms and treatment options?"
+                };
+                console.log("Request payload:", JSON.stringify(requestBody));
+                
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                console.log("Response status:", response.status);
+                
+                const data = await response.json();
+                console.log("Response data:", data);
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.statusText}`);
+                }
+                
+                if (data.error) {
+                    throw new Error(data.response || "Unknown error");
+                }
+                
+                return data.response || "No description available";
+            } catch (error) {
+                console.error("Error fetching disease description:", error);
+                return "Failed to fetch disease description. Please try again.";
+            }
+        }
+        
+        function setupUserInput() {
+            userInput.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                userInput.style.border = '2px dashed #4285F4';
+            });
+
+            userInput.addEventListener('dragleave', () => {
+                userInput.style.border = '1px solid black';
+            });
+
+            userInput.addEventListener('drop', (event) => {
+                event.preventDefault();
+                userInput.style.border = '1px solid black';
+
+                const file = event.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const messageContainer = document.createElement('div');
+                    messageContainer.className = 'message-container';
+                    messageContainer.style.alignItems = 'flex-end';
+
+                    const imagePreview = document.createElement('img');
+                    imagePreview.src = URL.createObjectURL(file);
+                    imagePreview.alt = "Uploaded Image";
+                    imagePreview.style.width = '345px';
+                    imagePreview.style.height = '350px';
+                    imagePreview.style.borderRadius = '10px';
+
+                    messageContainer.appendChild(imagePreview);
+                    chatBody.appendChild(messageContainer);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+
+                    disableTextInput();
+                    setTimeout(() => predictImage(file), 0);
+                } else {
+                    appendBotMessage("Please upload a valid image file.");
+                    userInput.placeholder = "Drag an image here..."; // Re-enable drag and drop text
+                    appendBotMessage("Please upload an image.");
+                }
+            });
+        }
+
+        function disableTextInput() {
+            userInput.disabled = true;
+            userInput.placeholder = "";
+            sendButton.disabled = true;
+        }
+
+        function enableTextInput() {
+            userInput.disabled = false;
+            userInput.placeholder = "Type a message...";
+            sendButton.disabled = false;
+        }
+        appendBotMessage("Please upload an image.");
+    </script> 
+</body>
+</html>
