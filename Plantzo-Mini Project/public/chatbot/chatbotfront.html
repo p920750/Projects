@@ -267,7 +267,7 @@
                 const confidence = result[maxIndex];
                 const diseaseName = classLabels[maxIndex];
         
-                const confidenceThreshold = 0.5;
+                const confidenceThreshold = 7.5;
         
                 if (confidence <= confidenceThreshold) {
                     appendBotMessage("Image not found or not recognized");
