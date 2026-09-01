@@ -107,6 +107,26 @@ BRIGHT_DATA_API_KEY=your_bright_data_api_key
 BRIGHT_DATA_COLLECTOR_ID=c_xxxxxx
 ```
 
+## ⚡ Terminal Commands to Run
+
+### 1. Backend Setup & Startup
+
+```bash
+cd backend
+npm install
+npm run dev # or npm start
+```
+
+### 2. Frontend Setup & Startup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
 ## 🌐 Live Deployment & Links
 
 The project is hosted and accessible via the following production URLs:
