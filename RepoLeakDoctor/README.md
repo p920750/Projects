@@ -50,16 +50,27 @@ graph TD
 
 ---
 
-## 🛠️ 4. Competition Requirements & Platform Tools Used
+## 🔒 4. Rote Execution Bounds & Preflight Safety Audit
 
-- **Rote CLI & Modiqo Registry:** Used as the primary distribution, packaging, and execution engine (`praveen-sec/repo-leak-doctor@1.0.2`).
+Repo Leak Doctor strictly complies with Rote zero-trust runtime contracts:
+- **Execution Mode:** 100% Local (`localExec: true`)
+- **Mutating Operations:** Read-Only (`readOnly: true`)
+- **Network Permissions:** None (`networkAccess: false`)
+- **Credential Storage:** Zero local or remote credentials required (`auth: none`)
+- **Exit Status:** Verified clean execution (Exit Code 0) with structured `FlowOutput` reporting.
+
+---
+
+## 🛠️ 5. Competition Requirements & Platform Tools Used
+
+- **Rote CLI & Modiqo Registry:** Primary distribution, packaging, and execution engine (`praveen-sec/repo-leak-doctor@1.0.2`).
 - **TypeScript (`__ROTE_PRESENTATION_SDK__`):** Used to build explicit, DAG-structured step execution (`createPlay`).
 - **WSL (Windows Subsystem for Linux):** Used for developing, testing, and hosting continuous background monitoring via `crontab`.
 - **Git Native Tooling:** Used for zero-dependency, local file scanning without third-party external services.
 
 ---
 
-## ⚖️ 5. Competitive Analysis
+## ⚖️ 6. Competitive Analysis
 
 | Feature | Repo Leak Doctor | Traditional Cloud Auditors | Standard Pre-Commit Hooks |
 | :--- | :--- | :--- | :--- |
@@ -70,22 +81,22 @@ graph TD
 
 ---
 
-## 💻 6. Tech Stack
+## 💻 7. Tech Stack
 
 - **Framework & SDK:** Rote CLI, `__ROTE_PRESENTATION_SDK__`
 - **Language:** TypeScript / Node.js (Deno runtime)
 - **OS & Environment:** Linux / WSL2 (Ubuntu), PowerShell compatible
-- **VCS & Automation:** Git, Linux Crontab
+- **VCS & Automation:** Git, Rote Scheduler, Linux Crontab
 
 ---
 
-## 🎥 7. Demonstration Video
+## 🎥 8. Demonstration Video
 
 - **Watch the Demo:** [Watch the video](https://drive.google.com/file/d/10XrBorRz3IsQoY5_0eGUzfEE2j3VV_K5/view?usp=sharing)
 
 ---
 
-## 🚀 8. Installation, Execution & Remediation Commands
+## 🚀 9. Installation, Execution & Remediation Commands
 
 ### 1. Direct Terminal Execution (WSL / PowerShell)
 
@@ -103,7 +114,15 @@ Install and run directly via the Modiqo Registry installer:
 curl -fsSL https://play.modiqo.ai/install?play=praveen-sec/repo-leak-doctor@1.0.2 | sh
 ```
 
-### 3. Remediation Commands (Fix Leaks Without Losing Local Files)
+### 3. Automated Clockwork Scheduling (Background Security Daemon)
+
+Automate continuous local repository scans using Rote's native recurrence engine:
+
+```bash
+play recurring schedule --reference praveen-sec/repo-leak-doctor@1.0.2 --cadence daily --why "Automated daily pre-push repo security audit" --for 6d
+```
+
+### 4. Remediation Commands (Fix Leaks Without Losing Local Files)
 
 If secrets or sensitive files are flagged, follow this workflow to resolve them safely without deleting local developer files:
 
@@ -130,29 +149,29 @@ rote play run praveen-sec/repo-leak-doctor@1.0.2 target_dir=. -y
 
 ---
 
-## 🌟 9. Key Advantages & Benefits
+## 🌟 10. Key Advantages & Benefits
 
-* **Zero Data Leakage:** Runs entirely offline; code and credentials never leave disk.
-* **Instant Developer Feedback:** Displays clear `Tracked leaks` and `Uncommitted leaks` counters.
-* **Zero Credential Setup:** Requires no third-party API keys or accounts to execute.
-* **Reusable Automation:** Easy to plug into local repositories or background hourly crontab jobs.
+- **Zero Data Leakage:** Runs entirely offline; code and credentials never leave disk.
+- **Instant Developer Feedback:** Displays clear `Tracked leaks` and `Uncommitted leaks` counters.
+- **Zero Credential Setup:** Requires no third-party API keys or accounts to execute.
+- **Reusable Automation:** Easy to plug into local repositories or background hourly crontab jobs.
 
 ---
 
-## 📈 10. Scope & Future Scalability
+## 📈 11. Scope & Future Scalability
 
 - **Current Scope:** Local pre-push secret and file auditing across custom directory paths.
 - **Future Scale:** Expanding regex rule sets for custom team secrets, enterprise configuration profiles, and automated IDE extension integrations.
 
 ---
 
-## 🔗 11. Official Links
+## 🔗 12. Official Links
 
 - **Public Package Listing:** [Repo Leak Doctor Registry Listing](https://play.modiqo.ai/praveen-sec/repo-leak-doctor@1.0.2)
 - **One-Line Installer Endpoint:** [Repo Leak Doctor Bootstrap Endpoint](https://play.modiqo.ai/install?play=praveen-sec/repo-leak-doctor@1.0.2)
 
 ---
 
-## 📄 12. License
+## 📄 13. License
 
 - Published under the **MIT License**.
