@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: sentinelgraph-falkordb
+    ports:
+      - "6379:6379"
+    environment:
+      - FALKORDB_ARGS=--save 60 1
+    volumes:
+      - falkordb_data:/data
+    restart: unless-stopped
+
+volumes:
+  falkordb_data:
+    driver: local
