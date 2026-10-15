@@ -362,6 +362,57 @@ sequenceDiagram
 
 ---
 
+## 🧰 Tech Stack Details
+
+SentinelGraph is built on a modern, decoupled cloud architecture designed for high-concurrency graph analytics, low-latency API dispatching, and responsive SOC visualization.
+
+| Tier / Category | Core Technologies | Role & Architectural Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | Next.js 14, React 18, Tailwind CSS, TypeScript, Lucide Icons | Responsive SOC Command Center, interactive graph analytics canvas, and real-time incident visualization. |
+| **Backend** | FastAPI, Python 3.10+, Model Context Protocol (MCP), Uvicorn, Pydantic | High-throughput asynchronous REST API, autonomous multi-agent swarm orchestration, and graph data serialization. |
+| **Database & Analytics** | FalkorDB Cloud, GraphBLAS, openCypher, Redis RESP3 Protocol | Ultra-fast in-memory property graph store, vectorized sparse-matrix linear algebra, and graph centrality algorithms. |
+| **DevOps & Tooling** | Git, Git LFS, GitHub, Docker Compose, Render, Vercel | Distributed version control, large binary asset tracking, automated multi-cloud CI/CD deployment pipelines. |
+
+---
+
+### 1. 🖥️ Frontend Architecture
+- **Next.js 14 (App Router):** Leverages React Server Components (RSC) and dynamic client routing across dedicated operational views (`/`, `/dashboard`, `/analytics`). Provides optimized production bundling, fast client-side navigation, and zero-layout-shift UI rendering.
+- **React 18:** Powers component-driven interactive SOC views, stateful incident filters, real-time alert dispatching, and dynamic SVG/Canvas graph topologies.
+- **Tailwind CSS:** Comprehensive utility-first styling system implementing a custom cybersecurity dark-mode design system with neon semantic risk badges (Red: Critical, Orange: High, Yellow: Medium, Green: Isolated).
+- **TypeScript & Lucide Icons:** Strict type safety across all graph entities, API payloads, and component props, paired with iconography for cloud infrastructure components.
+- **Vercel Deployment:** Globally distributed edge CDN hosting delivering sub-second Time-to-First-Byte (TTFB), automatic SSL/TLS termination, and zero-configuration continuous deployments directly from GitHub ([Live Demo](https://sentinel-graph-orcin.vercel.app/)).
+
+---
+
+### 2. ⚡ Backend Architecture
+- **FastAPI:** Asynchronous, high-throughput Python web framework providing native async request handling, auto-generated interactive OpenAPI/Swagger documentation (`/docs`), and strict schema validation via Pydantic.
+- **Python 3.10+ Runtime:** Powers core application logic, utilizing native asyncio concurrency for non-blocking database queries and agent execution workflows.
+- **Model Context Protocol (MCP):** Implements an extensible protocol for autonomous agent coordination. Connects specialized AI agents (Triage, Attack Path, Blast Radius, Containment) to runtime infrastructure tools (`mcp::falkordb::query_graph`, `mcp::k8s::apply_network_policy`, `mcp::iam::revoke_role`).
+- **Pydantic Data Serializers:** Enforces runtime type validation and serialization of raw FalkorDB nodes, relationships, paths, and algorithmic matrices into clean JSON schemas for client consumption.
+- **Render Deployment:** Cloud web service container running the backend Python environment with automatic deployments on Git push, health check monitoring (`/api/health`), and managed environment variable secrets ([Backend API](https://sentinelgraph-backend-txlp.onrender.com/)).
+
+---
+
+### 3. ⚡ Database & Graph Analytics
+- **FalkorDB Cloud:** Managed in-memory property graph engine deployed in the AWS `ap-south-1` (Mumbai) region. Executes graph operations via GraphBLAS sparse-matrix linear algebra and AVX-512 hardware SIMD vectorization to achieve sub-10ms query response times.
+- **openCypher Query Language:** Industry-standard declarative graph query language used for expressive, multi-hop relationship matching (`MATCH (p)-[:DEPENDS_ON]->(s)-[:CALLS]->(d)`), vulnerability correlation, and atomic graph state mutations (`SET p.status = 'Isolated'`).
+- **Native GraphBLAS Algorithmic Suite:**
+  - **Betweenness Centrality (`algo.betweenness()`):** Quantifies structural bridging across the graph, mathematically identifying critical microservices (e.g., `auth-service` with score $10.0$) that adversaries must traverse to reach crown-jewel assets.
+  - **Harmonic Centrality (`algo.harmonicCentrality()`):** Measures reciprocal shortest-path proximity across connected and disconnected subgraphs to compute the exact blast radius of compromised container workloads.
+  - **Maximum Flow / Minimum Cut (`algo.maxFlow()`):** Analyzes directional edge capacity constraints between pods and data stores (e.g., 50 MB/s bottleneck), identifying exfiltration choke points for targeted data loss prevention.
+- **Redis Protocol (RESP3) Wire Communication:** Communicates over lightweight binary protocol via `falkordb-py`, eliminating HTTP/JSON overhead with persistent multiplexed connection pooling.
+
+---
+
+### 4. 🛠️ DevOps, Infrastructure & Tooling
+- **Git Version Control:** Tracks all project source files, microservice configurations, and infrastructure-as-code manifests with conventional, traceable commits.
+- **Git LFS (Large File Storage):** Integrates Git LFS to track and manage large binary artifacts—specifically the high-definition project walkthrough video (`SentinelGraph/demovideo/demo.mp4`, ~242.6 MB)—via isolated LFS pointers, keeping repository clones lightweight and preventing file-size rejection on GitHub.
+- **GitHub Repository & Automation:** Centralized monorepo hosting at `p920750/Projects`, providing version history, issue management, and continuous deployment webhooks to Vercel and Render.
+- **Docker & Docker Compose:** Container orchestration configuration (`docker-compose.yml`) allowing developers to spin up a fully isolated, local FalkorDB instance (`localhost:6379`) with a single command (`docker compose up -d`).
+- **Dual-Cloud Production Deployment:** Decoupled production hosting utilizing Vercel for the Next.js edge frontend and Render for the containerized FastAPI backend, ensuring independent scaling and high availability.
+
+---
+
 ## 🚀 Setup and Execution Instructions
 
 ### Prerequisites
