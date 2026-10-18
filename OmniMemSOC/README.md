@@ -1,9 +1,11 @@
 # 🛡️ OmniMemSOC: Multi-Tenant Autonomous Memory Engine for Security Operations
 
 > **Track 2 Submission: Agent Memory and Coordination**  
+> 🔗 **Read the Blog Post**: [Solving Agent Amnesia in Security Operations with FalkorDB & Tri-Layer Graph Memory](https://dev.to/praveenrajan_9207/omnimemsoc-539k)  
 > **Live Web Application**: [https://omnimemsocfrontend.vercel.app/](https://omnimemsocfrontend.vercel.app/)  
 > **Live Backend API**: [https://omnimemsoc-backend.onrender.com](https://omnimemsoc-backend.onrender.com)  
-> **Video Demonstration**: [🎬 Watch OmniMemSOC Demo Video](https://drive.google.com/file/d/1IaNFsNTv61BIhdvcDR3Iw7lHWCczC9Uz/view?usp=sharing)
+> 🎬 **Watch the Demo Video (YouTube)**: [OmniMemSOC YouTube Demo](https://youtu.be/FStrjRx8Zf8)  
+> 📂 **Google Drive Backup**: [Google Drive Link](https://drive.google.com/file/d/1IaNFsNTv61BIhdvcDR3Iw7lHWCczC9Uz/view?usp=sharing)
 
 ---
 
@@ -405,7 +407,8 @@ OmniMemSOC is fully deployed and accessible 24/7 across global edge infrastructu
 
 Experience OmniMemSOC in action with our full-length walkthrough demonstrating multi-tenant memory, autonomous agent coordination, and live FalkorDB graph analytics:
 
-▶️ **[Click Here to Watch the OmniMemSOC Video Demonstration](https://drive.google.com/file/d/1IaNFsNTv61BIhdvcDR3Iw7lHWCczC9Uz/view?usp=sharing)**
+- 🎬 **Watch the Demo Video (YouTube)**: [OmniMemSOC YouTube Demo](https://youtu.be/FStrjRx8Zf8)
+- 📂 **Google Drive Backup**: [Google Drive Link](https://drive.google.com/file/d/1IaNFsNTv61BIhdvcDR3Iw7lHWCczC9Uz/view?usp=sharing)
 
 ---
 
@@ -418,6 +421,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 <h2 style="color: #ff5e62;">📋 14. Submission Notes & Acknowledgments</h2>
 
 - **Hackathon Track**: **Track 2 — Agent Memory and Coordination**
+- **Published Article**: 🔗 **Read the Blog Post**: [Solving Agent Amnesia in Security Operations with FalkorDB & Tri-Layer Graph Memory](https://dev.to/praveenrajan_9207/omnimemsoc-539k)
 - **Primary Technological Pillar**: **FalkorDB**'s Graph & Vector Engine
 - **Developer & Team Lead**: **Praveen** ([GitHub: @p920750](https://github.com/p920750))
 - **Special Thanks**: To the FalkorDB engineering team for building the GraphBLAS engine and vector index capabilities that made sub-millisecond cognitive agent memory possible.
