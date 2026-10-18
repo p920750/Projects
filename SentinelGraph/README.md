@@ -6,6 +6,8 @@
 [![Live Deployment (Vercel)](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel)](https://sentinel-graph-orcin.vercel.app/)
 [![Backend API (Render)](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge&logo=render)](https://sentinelgraph-backend-txlp.onrender.com/)
 [![Database (FalkorDB Cloud)](https://img.shields.io/badge/Database-FalkorDB%20Cloud-FF4438?style=for-the-badge&logo=redis)](https://falkordb.com/)
+[![DEV.to Blog Post](https://img.shields.io/badge/DEV.to-Blog%20Post-0A0A0A?style=for-the-badge&logo=devdotto)](https://dev.to/praveenrajan_9207/sentinelgraph-5gl8)
+[![YouTube Demo](https://img.shields.io/badge/YouTube-Demo%20Video-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/sLC_nKLTTR4)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![Next.js Version](https://img.shields.io/badge/Next.js-14.2-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -29,6 +31,7 @@ The operational scope of SentinelGraph is engineered specifically to address the
 - **Track:** Track 1 — Graph-Native Security & Multi-Agent Systems
 - **Core Themes:** Graph Databases, Agentic Cybersecurity, AI Integrations & Autonomous Incident Response
 - **Sponsoring Technology Partner:** FalkorDB
+- 🔗 **Read the Blog Post**: [Building Autonomous Cyber Incident Response using Model Context Protocol & FalkorDB](https://dev.to/praveenrajan_9207/sentinelgraph-5gl8)
 
 ---
 
@@ -587,9 +590,9 @@ npm run build
 
 ## 🎥 Video Demo
 
-### Watch Demo video
-- **Full High-Definition Video Walkthrough:**  
-  [https://drive.google.com/file/d/1c_1QtEu_5ZTaMTPX4B-jIMtyTWxWKBdo/view?usp=sharing](https://drive.google.com/file/d/1c_1QtEu_5ZTaMTPX4B-jIMtyTWxWKBdo/view?usp=sharing)
+### Watch Demo Video
+- 🎬 **Watch the Demo Video (YouTube)**: [SentinelGraph YouTube Demo](https://youtu.be/sLC_nKLTTR4)
+- 📂 **Google Drive Backup**: [Google Drive Link](https://drive.google.com/file/d/1c_1QtEu_5ZTaMTPX4B-jIMtyTWxWKBdo/view?usp=sharing)
 
 ---
 
@@ -624,6 +627,11 @@ SOFTWARE.
 ---
 
 ## 🛠️ Additional Resources & Contributing
+
+### Publications & Submission Links
+- 🔗 **Read the Blog Post**: [Building Autonomous Cyber Incident Response using Model Context Protocol & FalkorDB](https://dev.to/praveenrajan_9207/sentinelgraph-5gl8)
+- 🎬 **Official YouTube Demo**: [https://youtu.be/sLC_nKLTTR4](https://youtu.be/sLC_nKLTTR4)
+- 📂 **Google Drive Video Backup**: [https://drive.google.com/file/d/1c_1QtEu_5ZTaMTPX4B-jIMtyTWxWKBdo/view?usp=sharing](https://drive.google.com/file/d/1c_1QtEu_5ZTaMTPX4B-jIMtyTWxWKBdo/view?usp=sharing)
 
 ### Contributing Guidelines
 Contributions, issue reports, and feature proposals are welcome!
