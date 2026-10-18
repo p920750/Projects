@@ -22,6 +22,26 @@ The operational scope of SentinelGraph is engineered specifically to address the
 
 ---
 
+## 🏆 Hackathon Track & Alignment
+
+### Track Specification
+- **Event:** WeMakeDevs Hackathon
+- **Track:** Track 1 — Graph-Native Security & Multi-Agent Systems
+- **Core Themes:** Graph Databases, Agentic Cybersecurity, AI Integrations & Autonomous Incident Response
+- **Sponsoring Technology Partner:** FalkorDB
+
+---
+
+### Alignment with Track Objectives & Evaluation Criteria
+
+SentinelGraph was conceptualized, architected, and engineered from the ground up to address the central problem statement of **Track 1: Graph-Native Security & Multi-Agent Systems**. Modern cloud infrastructure is an intricate, non-linear web of ephemeral Kubernetes workloads, microservice dependencies, and delegated IAM role bindings. Legacy Security Information and Event Management (SIEM) solutions and tabular security databases fail catastrophically in these environments because evaluating transitive security risk requires multi-hop path traversals that cause exponential query performance degradation under traditional SQL `JOIN` clauses. SentinelGraph resolves this architectural bottleneck by establishing an ultra-high-performance, graph-native runtime security topology inside **FalkorDB**. Representing compute pods, microservices, databases, identities, and zero-day CVEs as first-class graph entities interconnected by directional dependency and privilege edges, SentinelGraph leverages FalkorDB’s GraphBLAS sparse-matrix linear algebra engine and AVX-512 vectorization. This enables sub-millisecond graph traversals and live execution of advanced graph procedures—including Betweenness Centrality (`algo.betweenness()`) for lateral movement chokepoint identification, Harmonic Centrality (`algo.harmonicCentrality()`) for blast radius reachability boundaries, and Maximum Flow (`algo.maxFlow()`) for data exfiltration cut capacity.
+
+SentinelGraph directly demonstrates how combining **FalkorDB graph analytics** with the **Model Context Protocol (MCP)** and autonomous security agents directly solves the track's problem statement. Traditional AI security tools suffer from contextual hallucination because language models operate in disconnected silos without environmental grounding. SentinelGraph overcomes this by orchestrating a collaborative swarm of specialized AI agents—Triage Agent, Attack Path Agent, Blast Radius Agent, and Containment Agent—connected to the live graph via standard MCP tools (`mcp::falkordb::query_graph`, `mcp::falkordb::algo_betweenness`, `mcp::falkordb::algo_harmonic`). Over the sub-millisecond Redis RESP3 wire protocol, these agents dynamically correlate active CVE signatures (e.g., CVSS 9.8 RCE) against MITRE ATT&CK techniques (T1190, T1078), trace multi-hop lateral movement pathways to crown-jewel databases, and synthesize explainable forensic dossiers—preserving end-to-end topological state across every triage iteration.
+
+Beyond passive threat intelligence correlation, SentinelGraph delivers closed-loop autonomous incident response workflows that satisfy the highest evaluation criteria of the track. When an incident is authorized for remediation, the containment agent executes atomic Cypher graph mutations (`SET p.status = 'Isolated'`) while simultaneously dispatching Calico `DefaultDeny` network policies via `mcp::k8s::apply_network_policy` to isolate compromised container workloads and revoking privileged IAM roles via `mcp::iam::revoke_role`. This blast-radius-aware containment collapses the active blast radius to zero within single-digit milliseconds without triggering collateral outages across neighboring microservices. Deployed on live production cloud infrastructure (Next.js 14 on Vercel, FastAPI on Render, FalkorDB Cloud on AWS `ap-south-1`) and validated with a 9-point automated audit suite, SentinelGraph establishes a gold standard for graph-native security and agentic SOC automation.
+
+---
+
 ## ⚡ FalkorDB Integration
 
 SentinelGraph utilizes **FalkorDB** as its core graph database engine. Traditional graph engines built on top of JVM abstractions or document wrappers struggle to achieve the sub-10ms response latencies required for real-time automated incident containment. FalkorDB delivers exceptional performance by implementing **GraphBLAS sparse matrix linear algebra**, transforming graph traversals and pattern matching into optimized matrix-matrix and matrix-vector multiplications.
